@@ -1,0 +1,1 @@
+Scripts for converting/ migrating meraki content to strapi.
