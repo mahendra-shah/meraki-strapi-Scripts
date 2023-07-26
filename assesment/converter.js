@@ -70,7 +70,7 @@ class merakiToStrapiConverter {
                   "id": "c3DLQw9q1w",
                   "type": "header",
                   "data": {
-                      "text": `${merakiData.value.correct[1].value.replace(/<br>/g, "").replace(/&emsp;/g, '')}`,
+                      "text": `${merakiData.value.correct[1] ? merakiData.value.correct[1].value.replace(/<br>/g, "").replace(/&emsp;/g, '') : ''}`,
                       "level": merakiData.value.correct[0].variant
                   }
               },
@@ -78,7 +78,7 @@ class merakiToStrapiConverter {
                   "id": "Wa26k6RT7z",
                   "type": "paragraph",
                   "data": {
-                      "text": `${merakiData.value.correct[2].value.replace(/<br>/g, "").replace(/&emsp;/g, '')}`
+                      "text": `${merakiData.value.correct[2] ? merakiData.value.correct[2].value.replace(/<br>/g, "").replace(/&emsp;/g, '') : ''}`
                   }
               }
           ],
@@ -99,7 +99,7 @@ class merakiToStrapiConverter {
                   "id": "c3DLQw9q1w",
                   "type": "header",
                   "data": {
-                      "text": `${merakiData.value.incorrect[1].value.replace(/<br>/g, "").replace(/&emsp;/g, '')}`,
+                      "text": `${merakiData.value.incorrect[1] ? merakiData.value.incorrect[1].value.replace(/<br>/g, "").replace(/&emsp;/g, '') : ''}`,
                       "level": merakiData.value.correct[0].variant
                   }
               },
@@ -107,7 +107,7 @@ class merakiToStrapiConverter {
                   "id": "Wa26k6RT7z",
                   "type": "paragraph",
                   "data": {
-                      "text": `${merakiData.value.incorrect[2].value.replace(/<br>/g, "").replace(/&emsp;/g, '')}`
+                      "text": `${merakiData.value.incorrect[2] ? merakiData.value.incorrect[2].value.replace(/<br>/g, "").replace(/&emsp;/g, '') : ''}`
                   }
               }
           ],
