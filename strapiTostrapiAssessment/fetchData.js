@@ -15,15 +15,16 @@ const MerakiAccessData = async () => {
     const resp = await strapi.find("assessments");
     
     const totalAssessment = 591;
-    for (let id = 6; id <= totalAssessment; id++) {
+    for (let id = 1; id <= totalAssessment; id++) {
       // 863,
       const data = await strapi.findOne("assessments", id, {
-        populate: ["dynamic", "explaination"],
+        populate: ["dynamic", "explaination","exercise","course"],
       });
-            let modifyQuestion;
+      let exerciseId = data.data.attributes.exercise.data.id
+      let courseId = data.data.attributes.course.data.id
+      let modifyQuestion;
       let modifyOption;
-      let modifyExplaination;
-
+      let modifyExplaination;      
       if (data.data.attributes.question) {
         modifyQuestion = await question(data.data.attributes.question);
       }
@@ -36,10 +37,18 @@ const MerakiAccessData = async () => {
         modifyExplaination = await explaination(exp)
 
       }
+      const slugData = {
+        name: `c${courseId}-e${exerciseId}-ai${id}`,
+        slug:`c${courseId}-e${exerciseId}-ai${id}`,
+        type:'assessment',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        publishedAt: new Date(),
 
+    };
       let ID = data.data.id;
-
-      await updateData(modifyQuestion, modifyOption, modifyExplaination, ID);
+    
+      await updateData(modifyQuestion, modifyOption, modifyExplaination, ID, slugData);
     }
   } catch (error) {
     console.error("Error occurred:", error);

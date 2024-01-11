@@ -5,7 +5,7 @@ let exerciseDataUrl = `https://merp-strapi.merakilearn.org/api/exercises/`;
 
 
 const postBaseURL = 'http://3.110.213.190/api';
-const BEARER_TOKEN = '';
+const BEARER_TOKEN = '97194fcf58ac129f284485aede83cac7e662c5a50af07162c84c22575c392b60ebd3b3ffeb3afe7a7a8e26cc1d6f2b6943fe0c542f04dabb4febbf0069fcf02353462266c7192f7ba04bd3a3d3e07d256feee16f106501772a0078e57a49df6196922b936189bc6e1b74ce2bbaecfe8fbbfd0bcb145ace48e224f872fcf8d1c8';
 
 let exerciseURL
 const updateExercisesData = async () => {
