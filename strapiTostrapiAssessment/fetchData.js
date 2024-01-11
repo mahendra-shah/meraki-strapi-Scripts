@@ -5,7 +5,7 @@ const { updateData } = require("./Api");
 const { option,question, explaination } = require("./converter");
 
 const strapi = new Strapi({
-  url: "https://merd-strapi.merakilearn.org/api",
+  url: "https://merp-strapi.merakilearn.org/api",
   // url: "http://localhost:1337/api",
   // url: 'https://merd-strapi.merakilearn.org/api/assessments'
 });
@@ -13,13 +13,14 @@ const strapi = new Strapi({
 const MerakiAccessData = async () => {
   try {
     const resp = await strapi.find("assessments");
-    const totalAssessment = resp.meta.pagination.total;
+    
+    const totalAssessment = 591;
     for (let id = 6; id <= totalAssessment; id++) {
       // 863,
       const data = await strapi.findOne("assessments", id, {
         populate: ["dynamic", "explaination"],
       });
-      let modifyQuestion;
+            let modifyQuestion;
       let modifyOption;
       let modifyExplaination;
 
