@@ -27,7 +27,7 @@ class merakiToStrapiConverter {
     options(merakiData, solution) {
       if (merakiData.component == 'options') {
         const items = []
-        for (let i = 0; i < merakiData.value.length; i++) {
+        for (let i = 0; i < (merakiData.value.length); i++) {
           const val = {
             "time": Date.now(),
             "blocks": [
@@ -41,11 +41,12 @@ class merakiToStrapiConverter {
             ],
             "version": "2.23.2"
           };
+          let id=1+i;
           const opt = {
             "__component": "assessment-option.option",
-            "number": i+1,
+            "number": id,
             "value": JSON.stringify(val),
-            "correct": solution == i ? true : false
+            "correct": solution == id ? true : false
           }
           items.push(opt)
         }
