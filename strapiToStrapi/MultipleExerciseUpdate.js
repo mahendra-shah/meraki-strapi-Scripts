@@ -9,27 +9,34 @@ const BEARER_TOKEN = '';
 
 let exerciseURL
 const updateExercisesData = async () => {
-    for (let i = 1; i <= 14; i++) { // put you range here till the last exercise id which you want to update
+    for (let i = 1456; i <= 1456; i++) { // put you range here till the last exercise id which you want to update
         exerciseURL = exerciseDataUrl + `${i}`;
         let exerciseData = await updateSingleExericisesData(exerciseURL);
         let exerciseId = exerciseData.id;
         delete exerciseData.id;
-
+        // generate a unique slug for each exercise with exercise name
+        const code = exerciseData.name.split(/\s+/).map(word => {
+            const match = word.match(/[a-zA-Z]/);
+            return match ? match[0] : '';
+        }).join('').toLowerCase();
         const slugData = {
-            name: exerciseData.name,
-            created_at: exerciseData.created_at,
-            type:exerciseData.type,
-            slug:exerciseData.name,
-            updated_at: exerciseData.updated_at,
-            published_at: exerciseData.published_at,
+            name: `exercise-${exerciseId}-${code}`,
+            type: exerciseData.type,
+            slug: `exercise-${exerciseId}-${code}`,
             created_by_id: null,
-            updated_by_id: null
+            updated_by_id: null,
+            published_at: exerciseData.published_at,
+            created_at: Date.now(),
+            updated_at: null
         };
         let slugFormatedData = {
             data: slugData
         }
-        console.log(slugFormatedData,"slugFormatedData");
+        console.log(`ID - ${exerciseId} -> ${slugData.name} -> OK`);
+        // console.log(slugData, 'slugData-->');
+
         let slugId;
+        // return;
         try {
             const res = await axios.post(`${postBaseURL}/slugs`, slugFormatedData, {
                 headers: {
@@ -39,12 +46,12 @@ const updateExercisesData = async () => {
                 }
             });
 
-            console.log('👉 Returned data:', res.data.data);
+            console.log('👉 Returned data:', `ID - ${res.data.data.id} -> ${res.data.data.attributes.name} -> OKAY`);
             const { data: { id } } = res.data;
             slugId = id;
         } catch (error) {
 
-            console.error(`😱gggggggg Axios request failed: ${error.message}`);
+            console.log(`😱gggggggg Axios request failed: ${error}`);
         }
 
         exerciseData.slug = slugId;
@@ -60,13 +67,13 @@ const updateExercisesData = async () => {
             }
         })
             .then(response => {
-                console.log('Returned data:', response.data.data);
+                console.log('Returned data of Slug:', `ID - ${response.data.data.id} -> ${response.data.data.attributes.name} -> OKAY`);
                 return response.data.data;
             })
             .catch(err => {
                 console.log(`Axios request failed: ${err}`);
-                console.error('Response data:', err.response.data);
-                console.error('Response status:', err.response.status);
+                // console.error('Response data:', err.response.data);
+                // console.error('Response status:', err.response.status);
             });
 
 
