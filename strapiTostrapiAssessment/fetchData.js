@@ -15,7 +15,7 @@ const MerakiAccessData = async () => {
     const resp = await strapi.find("assessments");
     
     const totalAssessment = 591;
-    for (let id = 2; id <= totalAssessment; id++) {
+    for (let id = 1; id <= totalAssessment; id++) {
       // 863,
       const data = await strapi.findOne("assessments", id, {
         populate: ["dynamic", "explaination","exercise","course"],
