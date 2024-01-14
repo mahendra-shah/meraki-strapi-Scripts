@@ -9,37 +9,27 @@ const BEARER_TOKEN = '5f51010f55eba43d455af2038444710f76edd05733172f4992f5721fa0
 
 let exerciseURL
 const updateExercisesData = async () => {
-    exerciseURL = exerciseDataUrl + `${i}?populate=course`;
-    for (let i = 1456; i <= 1456; i++) { // put you range here till the last exercise id which you want to update
-        exerciseURL = exerciseDataUrl + `${i}`;
+    for (let i = 1351; i <= 1455; i++) { // put you range here till the last exercise id which you want to update
+        exerciseURL = exerciseDataUrl + `${i}?populate=course`;
         let exerciseData = await updateSingleExericisesData(exerciseURL);
         let exerciseId = exerciseData.id;
         delete exerciseData.id;
-        // generate a unique slug for each exercise with exercise name
-        const code = exerciseData.name.split(/\s+/).map(word => {
-            const match = word.match(/[a-zA-Z]/);
-            return match ? match[0] : '';
-        }).join('').toLowerCase();
         const courseId = exerciseData.course.data.id;
         const slugData = {
-            name: `exercise-${exerciseId}-${code}`,
+            name: exerciseData.name,
+            created_at: exerciseData.created_at,
             type: exerciseData.type,
-            slug: `exercise-${exerciseId}-${code}`,
-            created_by_id: null,
+            slug: exerciseData.name,
             course: courseId,
-            updated_by_id: null,
+            updated_at: exerciseData.updated_at,
             published_at: exerciseData.published_at,
-            created_at: Date.now(),
-            updated_at: null
+            created_by_id: null,
+            updated_by_id: null
         };
         let slugFormatedData = {
             data: slugData
         }
-        console.log(`ID - ${exerciseId} -> ${slugData.name} -> OK`);
-        // console.log(slugData, 'slugData-->');
-
         let slugId;
-        // return;
         try {
             const res = await axios.post(`${postBaseURL}/slugs`, slugFormatedData, {
                 headers: {
@@ -70,34 +60,15 @@ const updateExercisesData = async () => {
             }
         })
             .then(response => {
-                console.log('Returned data of Slug:', `ID - ${response.data.data.id} -> ${response.data.data.attributes.name} -> OKAY`);
+                console.log('Returned data:', response.data.data);
                 return response.data.data;
             })
             .catch(err => {
                 console.log(`Axios request failed: ${err}`);
-                // console.error('Response data:', err.response.data);
-                // console.error('Response status:', err.response.status);
+                console.error('Response data:', err.response.data);
+                console.error('Response status:', err.response.status);
             });
 
-
-        // ########### POST API CODE ###############
-        // const res = await axios
-        //     .post(`${postBaseURL}/exercises`, exerciseFormatedData, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'version-code': '5050505',
-        //             Authorization: `Bearer ${BEARER_TOKEN}`
-        //         }
-        //     })
-        //     .then(response => {
-        //         console.log('👉 Returned data:', response);
-        //         // return response;
-        //     })
-        //     .catch(err => {
-        //         console.log(`😱 Axios request failed: ${err}`);
-        //         console.error('Response data:', err.response.data);
-        //         console.error('Response status:', err.response.status);
-        //     });
 
     }
 }
