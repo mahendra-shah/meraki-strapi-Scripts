@@ -13,7 +13,6 @@ const question = (question) => {
       modifyQuestion += `<h1>${block.data.text}</h1>`;
     }
   });
-  console.log(modifyQuestion, "this is modifyQuestion");
   return modifyQuestion;
 };
 
@@ -43,7 +42,6 @@ const option = (option, createdAt) => {
           output.value.push(obj);
         } else if (val.blocks[i].type == "image") {
           let url = val.blocks[i].data.file.url;
-          console.log(url, "this is url");
           const lastSlashIndex = url.lastIndexOf("/");
           const imageExt = url.substring(lastSlashIndex + 1).split(".")[1];
           const imageName = url.substring(lastSlashIndex + 1).split(".")[0];

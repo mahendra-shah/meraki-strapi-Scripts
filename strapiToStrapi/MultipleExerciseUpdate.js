@@ -4,11 +4,13 @@ const updateSingleExericisesData = require('./updateExercises');
 let exerciseDataUrl = `https://merp-strapi.merakilearn.org/api/exercises/`;
 
 
-const postBaseURL = 'http://3.110.213.190/api';
-const BEARER_TOKEN = '';
+const postBaseURL = 'http://localhost:1337/api';
+const BEARER_TOKEN = '5f51010f55eba43d455af2038444710f76edd05733172f4992f5721fa04fccb0643e9e3c0589aaa2f7003587094ef1b1ebb8d5782e195ccb804963e82d47637b5d7acb133576f1b23bb061b7208cd8242e5c15174e127a12e9fc7f27162be333b39db0fd2d3c81ddacf86a31e2966897700e02e67a22bc834bb0f790a2f7c3eb';
 
 let exerciseURL
 const updateExercisesData = async () => {
+    for (let i = 1351; i <= 1455; i++) { // put you range here till the last exercise id which you want to update
+        exerciseURL = exerciseDataUrl + `${i}?populate=course`;
     for (let i = 1456; i <= 1456; i++) { // put you range here till the last exercise id which you want to update
         exerciseURL = exerciseDataUrl + `${i}`;
         let exerciseData = await updateSingleExericisesData(exerciseURL);
@@ -19,11 +21,13 @@ const updateExercisesData = async () => {
             const match = word.match(/[a-zA-Z]/);
             return match ? match[0] : '';
         }).join('').toLowerCase();
+        const courseId = exerciseData.course.data.id;
         const slugData = {
             name: `exercise-${exerciseId}-${code}`,
-            type: exerciseData.type,
-            slug: `exercise-${exerciseId}-${code}`,
+            type:  exerciseData.type,
+            slug:  `exercise-${exerciseId}-${code}`,
             created_by_id: null,
+            course: courseId,
             updated_by_id: null,
             published_at: exerciseData.published_at,
             created_at: Date.now(),
