@@ -11,15 +11,15 @@ const strapi = new Strapi({
 });
 
 const MerakiAccessData = async () => {
-  try {
-    const resp = await strapi.find("assessments");
-    
-    const totalAssessment = 591;
+  try {    
+    const totalAssessment = 1;
     for (let id = 1; id <= totalAssessment; id++) {
       // 863,
       const data = await strapi.findOne("assessments", id, {
         populate: ["dynamic", "explaination","exercise","course"],
       });
+
+      console.log(data);
       let exerciseId = data.data.attributes.exercise.data.id
       let courseId = data.data.attributes.course.data.id
       let modifyQuestion;
@@ -45,7 +45,9 @@ const MerakiAccessData = async () => {
         updatedAt: new Date(),
         publishedAt: new Date(),
         assssements:data.data.id,
+        course: courseId,
     };
+    console.log(slugData);
       let ID = data.data.id;
     
       await updateData(modifyQuestion, modifyOption, modifyExplaination, ID, slugData);

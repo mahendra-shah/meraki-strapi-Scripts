@@ -1,10 +1,10 @@
 const axios = require("axios");
-const postBaseURL = "http://3.110.213.190/api";
-// const postBaseURL = "http://localhost:1337/api";
+// const postBaseURL = "http://3.110.213.190/api";
+const postBaseURL = "http://localhost:1337/api";
 const tableName = "assessments";
 // let BEARER_TOKEN =
 //   "b0041255f0d636b62860aaa933fdc6d186d2a85652da44c81c2ea21a20140f3fcda7197713b23920a4a971a87b3bd694cff0429df90e604da040a9550f8a3f1de5d478700ca004debfc0344a5adda29854c6b717ddd579687c2212ffcf974b647b2e33352728257a1b1c63d893022cd03837c57dc82e49accb644f1d439824a4";
-const BEARER_TOKEN = '280117da5dfa181ef74b08bd6f454e0f1ce1e050306a3717947130b67482a8a81220f8864bcecece303b6b336a2979ce3ec1ba1996adaa7baf59c0065860b37ba80d90241aef3ec9f51dfd0083b0f0d61554cec70d4b1c1cb8d9bc3e12a1431e3fdb1f21317f1fb8c961096141e7a28a6c23f65c9ea26b922104a1ca7843ab8d';
+const BEARER_TOKEN = '5f51010f55eba43d455af2038444710f76edd05733172f4992f5721fa04fccb0643e9e3c0589aaa2f7003587094ef1b1ebb8d5782e195ccb804963e82d47637b5d7acb133576f1b23bb061b7208cd8242e5c15174e127a12e9fc7f27162be333b39db0fd2d3c81ddacf86a31e2966897700e02e67a22bc834bb0f790a2f7c3eb';
 const updateData = async (
   modifyQuestion,
   modifyOption,

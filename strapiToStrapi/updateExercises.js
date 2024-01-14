@@ -13,8 +13,8 @@ async function updateSingleExericisesData(exerciseDataUrl) {
     const formatingDataNEW = JSON.parse(formatingDataJson);
 
     // Extract the desired properties
-    const { id, attributes: { name, description, type, createdAt, updatedAt, publishedAt, locale } } = formatingDataNEW;
-    finalData = { id, name, description, content: null, type, created_at: createdAt, updated_at: updatedAt, published_at: publishedAt, locale };
+    const { id, attributes: { name, description, type, createdAt, updatedAt, publishedAt, locale, course } } = formatingDataNEW;
+    finalData = { id, name, description, content: null, type, created_at: createdAt, updated_at: updatedAt, published_at: publishedAt, locale, course };
 
     const originalContent = exerciseData.data.data.attributes.content;
 

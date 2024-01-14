@@ -4,22 +4,23 @@ const updateSingleExericisesData = require('./updateExercises');
 let exerciseDataUrl = `https://merp-strapi.merakilearn.org/api/exercises/`;
 
 
-const postBaseURL = 'http://3.110.213.190/api';
-const BEARER_TOKEN = '97194fcf58ac129f284485aede83cac7e662c5a50af07162c84c22575c392b60ebd3b3ffeb3afe7a7a8e26cc1d6f2b6943fe0c542f04dabb4febbf0069fcf02353462266c7192f7ba04bd3a3d3e07d256feee16f106501772a0078e57a49df6196922b936189bc6e1b74ce2bbaecfe8fbbfd0bcb145ace48e224f872fcf8d1c8';
+const postBaseURL = 'http://localhost:1337/api';
+const BEARER_TOKEN = '5f51010f55eba43d455af2038444710f76edd05733172f4992f5721fa04fccb0643e9e3c0589aaa2f7003587094ef1b1ebb8d5782e195ccb804963e82d47637b5d7acb133576f1b23bb061b7208cd8242e5c15174e127a12e9fc7f27162be333b39db0fd2d3c81ddacf86a31e2966897700e02e67a22bc834bb0f790a2f7c3eb';
 
 let exerciseURL
 const updateExercisesData = async () => {
-    for (let i = 1; i <= 14; i++) { // put you range here till the last exercise id which you want to update
-        exerciseURL = exerciseDataUrl + `${i}`;
+    for (let i = 1351; i <= 1455; i++) { // put you range here till the last exercise id which you want to update
+        exerciseURL = exerciseDataUrl + `${i}?populate=course`;
         let exerciseData = await updateSingleExericisesData(exerciseURL);
         let exerciseId = exerciseData.id;
         delete exerciseData.id;
-
+        const courseId = exerciseData.course.data.id;
         const slugData = {
             name: exerciseData.name,
             created_at: exerciseData.created_at,
-            type:exerciseData.type,
-            slug:exerciseData.name,
+            type: exerciseData.type,
+            slug: exerciseData.name,
+            course: courseId,
             updated_at: exerciseData.updated_at,
             published_at: exerciseData.published_at,
             created_by_id: null,
@@ -28,7 +29,6 @@ const updateExercisesData = async () => {
         let slugFormatedData = {
             data: slugData
         }
-        console.log(slugFormatedData,"slugFormatedData");
         let slugId;
         try {
             const res = await axios.post(`${postBaseURL}/slugs`, slugFormatedData, {
