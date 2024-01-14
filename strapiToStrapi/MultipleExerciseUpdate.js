@@ -9,8 +9,7 @@ const BEARER_TOKEN = '5f51010f55eba43d455af2038444710f76edd05733172f4992f5721fa0
 
 let exerciseURL
 const updateExercisesData = async () => {
-    for (let i = 1351; i <= 1455; i++) { // put you range here till the last exercise id which you want to update
-        exerciseURL = exerciseDataUrl + `${i}?populate=course`;
+    exerciseURL = exerciseDataUrl + `${i}?populate=course`;
     for (let i = 1456; i <= 1456; i++) { // put you range here till the last exercise id which you want to update
         exerciseURL = exerciseDataUrl + `${i}`;
         let exerciseData = await updateSingleExericisesData(exerciseURL);
@@ -24,8 +23,8 @@ const updateExercisesData = async () => {
         const courseId = exerciseData.course.data.id;
         const slugData = {
             name: `exercise-${exerciseId}-${code}`,
-            type:  exerciseData.type,
-            slug:  `exercise-${exerciseId}-${code}`,
+            type: exerciseData.type,
+            slug: `exercise-${exerciseId}-${code}`,
             created_by_id: null,
             course: courseId,
             updated_by_id: null,
@@ -99,6 +98,7 @@ const updateExercisesData = async () => {
         //         console.error('Response data:', err.response.data);
         //         console.error('Response status:', err.response.status);
         //     });
+
     }
 }
 
