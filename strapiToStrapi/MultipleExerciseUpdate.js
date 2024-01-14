@@ -4,28 +4,34 @@ const updateSingleExericisesData = require('./updateExercises');
 let exerciseDataUrl = `https://merp-strapi.merakilearn.org/api/exercises/`;
 
 
-const postBaseURL = 'http://localhost:1337/api';
-const BEARER_TOKEN = '5f51010f55eba43d455af2038444710f76edd05733172f4992f5721fa04fccb0643e9e3c0589aaa2f7003587094ef1b1ebb8d5782e195ccb804963e82d47637b5d7acb133576f1b23bb061b7208cd8242e5c15174e127a12e9fc7f27162be333b39db0fd2d3c81ddacf86a31e2966897700e02e67a22bc834bb0f790a2f7c3eb';
+const postBaseURL = 'http://3.110.213.190/api';
+const BEARER_TOKEN = '16230fd7d526dadb3cc7404a2685d53cc1401c22b537a8df195fa4c91708f205e1a20ac6f73cf67e3b5f110e19d6e26f1381144a66ddf82df88fd2cbfa206858766a7e15f8bf40e3b7639c942e3588b122b24cbaa0a812ac0977687bc5cdfc28c36e88e03419181d3b90c9983f1c26e55e864f89acc03e6129f0c7e34bef2f14';
 
 let exerciseURL
 const updateExercisesData = async () => {
-    for (let i = 1351; i <= 1455; i++) { // put you range here till the last exercise id which you want to update
+    for (let i = 1; i <= 1455; i++) { // put you range here till the last exercise id which you want to update
         exerciseURL = exerciseDataUrl + `${i}?populate=course`;
         let exerciseData = await updateSingleExericisesData(exerciseURL);
         let exerciseId = exerciseData.id;
         delete exerciseData.id;
         const courseId = exerciseData.course.data.id;
+        const code = exerciseData.name.split(/\s+/).map(word => {
+            const match = word.match(/[a-zA-Z]/);
+            return match ? match[0] : '';
+        }).join('').toLowerCase();
+
         const slugData = {
-            name: exerciseData.name,
-            created_at: exerciseData.created_at,
+            name: `exercise-${exerciseId}-${code}`,
             type: exerciseData.type,
-            slug: exerciseData.name,
+            slug: `exercise-${exerciseId}-${code}`,
+            created_by_id: exerciseData.created_by_id,
             course: courseId,
-            updated_at: exerciseData.updated_at,
+            updated_by_id: null,
             published_at: exerciseData.published_at,
-            created_by_id: null,
-            updated_by_id: null
+            created_at: Date.now(),
+            updated_at: null
         };
+
         let slugFormatedData = {
             data: slugData
         }
@@ -60,7 +66,7 @@ const updateExercisesData = async () => {
             }
         })
             .then(response => {
-                console.log('Returned data:', response.data.data);
+                console.log('Returned data:', response.data.data.id);
                 return response.data.data;
             })
             .catch(err => {
